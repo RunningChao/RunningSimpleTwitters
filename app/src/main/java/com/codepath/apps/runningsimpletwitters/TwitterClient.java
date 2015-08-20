@@ -1,14 +1,13 @@
 package com.codepath.apps.runningsimpletwitters;
 
-import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FlickrApi;
-import org.scribe.builder.api.TwitterApi;
-
 import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.scribe.builder.api.Api;
+import org.scribe.builder.api.TwitterApi;
 
 /*
  * 
@@ -52,6 +51,14 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
 
+	public void getUserProfile(AsyncHttpResponseHandler handler, String screenName, Long userId){
+		String apiUrl = "https://api.twitter.com/1.1/users/show.json";
+		RequestParams params = new RequestParams();
+		params.put("user_id ",userId);
+		params.put("screen_name", screenName);
+		getClient().get(apiUrl, params, handler);
+	}
+
 	public void getHomeTimeline(AsyncHttpResponseHandler handler, long sinceId){
 		String apiUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json";
 		RequestParams params = new RequestParams();
@@ -61,9 +68,17 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().get(apiUrl, params, handler);
 	}
 
-	public void getLoginUserProfile(AsyncHttpResponseHandler handler){
+	public void getUserInfo(AsyncHttpResponseHandler handler){
 		String apiUrl = "https://api.twitter.com/1.1/account/verify_credentials.json";
+		getClient().get(apiUrl, null, handler);
+	}
+
+	public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler, Long page){
+		String apiUrl = "https://api.twitter.com/1.1/statuses/user_timeline.json";
 		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("screen_name", screenName);
+		params.put("page", page);
 		getClient().get(apiUrl, params, handler);
 	}
 
@@ -73,5 +88,13 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("status", content);
 		//getClient().get(apiUrl, params, handler);
 		getClient().post(apiUrl, params, handler);
+	}
+
+	public void getMentionsTimeLine(AsyncHttpResponseHandler handler, long page){
+		String apiUrl = "https://api.twitter.com/1.1/statuses/mentions_timeline.json";
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("page",page);
+		getClient().get(apiUrl, params, handler);
 	}
 }

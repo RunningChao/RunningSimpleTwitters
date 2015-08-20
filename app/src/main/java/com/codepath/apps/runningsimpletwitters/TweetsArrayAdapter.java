@@ -1,6 +1,7 @@
 package com.codepath.apps.runningsimpletwitters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +23,17 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         super(context, android.R.layout.simple_list_item_1, tweets);
     }
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-       Tweet tweet = getItem(position);
+        Tweet tweet = getItem(position);
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
         }
         ImageView ivProfileImage = (ImageView)convertView.findViewById(R.id.ivProfileImage);
+        ivProfileImage.setOnClickListener(null);
+        ivProfileImage.setOnClickListener(new clickListener(tweet));
         TextView tvUserName = (TextView)convertView.findViewById(R.id.tvUserName);
         TextView tvBody = (TextView)convertView.findViewById(R.id.tvBody);
         TextView tvRelativeTime = (TextView)convertView.findViewById(R.id.tvRelativeTime);
@@ -39,5 +44,22 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
         return convertView;
+    }
+
+    public class clickListener implements View.OnClickListener{
+        private Tweet tweet;
+
+        public clickListener(Tweet tweet){
+            this.tweet = tweet;
+        }
+
+        @Override
+        public void onClick(View v) {
+            TwitterClient client = TwitterApplication.getRestClient();
+            Intent i = new Intent(v.getContext(), ProfileActivity.class);
+            i.putExtra("screen_name", tweet.getUser().getScreenName());
+            i.putExtra("id", tweet.getUser().getUid());
+            v.getContext().startActivity(i);
+        }
     }
 }

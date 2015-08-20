@@ -1,11 +1,9 @@
 package com.codepath.apps.runningsimpletwitters;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +11,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.codepath.apps.runningsimpletwitters.R;
-import com.codepath.apps.runningsimpletwitters.models.LoginUser;
-import com.codepath.apps.runningsimpletwitters.models.Tweet;
+import com.codepath.apps.runningsimpletwitters.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class PostTwitterActivity extends ActionBarActivity {
     private ImageView ivProfileImage;
@@ -39,7 +33,7 @@ public class PostTwitterActivity extends ActionBarActivity {
         getSupportActionBar().setLogo(R.drawable.twitter);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         setupView();
-        LoginUser loginUser = (LoginUser) getIntent().getSerializableExtra("userProfile");
+        User loginUser = (User) getIntent().getSerializableExtra("userProfile");
         Picasso.with(this).load(loginUser.getProfileImageUrl()).into(ivProfileImage);
         tvName.setText(loginUser.getName());
     }

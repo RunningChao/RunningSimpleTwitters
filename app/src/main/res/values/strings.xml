@@ -10,4 +10,5 @@
     <string name="action_settings">Compose</string>
     <string name="title_activity_post_twitter">Compose Tweet</string>
     <string name="characters_remaining">characters remaining : </string>
+    <string name="title_activity_profile">Profile</string>
 </resources>

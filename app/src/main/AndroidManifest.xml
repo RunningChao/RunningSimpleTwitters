@@ -55,9 +55,12 @@
         </activity>
         <activity
             android:name=".PostTwitterActivity"
-            android:label="@string/title_activity_post_twitter"
-            android:icon="@drawable/twitter">
-
+            android:icon="@drawable/twitter"
+            android:label="@string/title_activity_post_twitter" >
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" >
         </activity>
     </application>
 
